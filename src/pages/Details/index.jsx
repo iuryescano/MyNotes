@@ -7,8 +7,9 @@ export function Details() { //Se eu tivesse colocado default lá no main eu não
     <Container>
       <h1>Hello World!</h1>
 
-      <Button />
+      <Button title="Login" loading /> 
+      <Button title="Cadastrar" />
+      <Button title="Voltar" />
     </Container>
   )
 }
- 
