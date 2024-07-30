@@ -3,11 +3,13 @@ import { Container, Links } from "./styles";
 import { Header } from "../../components/Header";
 import { Button } from "../../components/Button";
 import { Section } from "../../components/Section";
+import { Tag } from "../../components/Tag";
 
 
 export function Details() { //Se eu tivesse colocado default lá no main eu não precisaria colocar entre {} pois eu estaria exportando tudo
   return ( //1 componente sempre vai retornar sempre 1 único elemento por isso da div envolta de tudo
     <Container>
+      
       <Header />
       <Section title="Links Uteis">
         <Links>
@@ -15,6 +17,12 @@ export function Details() { //Se eu tivesse colocado default lá no main eu não
           <li><a href="https://github.com/iuryescano">https://github.com/iuryescano</a></li>
         </Links>
       </Section>
+
+      <Section title="Marcadores">
+        <Tag title="express"/>
+        <Tag title="nodejs"/>
+      </Section>
+
       <Button title="Voltar" />
     </Container>
   )
