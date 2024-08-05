@@ -1,5 +1,5 @@
-import { Container, Form } from "./styles";
-import { FiArrowLeft, FiUser, FiMail, FiLock } from 'react-icons/fi';
+import { Container, Form, Avatar } from "./styles";
+import { FiArrowLeft, FiUser, FiMail, FiLock, FiCamera } from 'react-icons/fi';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
 
@@ -13,6 +13,15 @@ export function Profile(){
             </header>
 
             <Form>
+                <Avatar>
+                    <img src="https://github.com/iuryescano.png" alt="Foto do usuario"></img>
+                    
+                    <label htmlFor="avatar">
+                        <FiCamera/>
+
+                        <input id="avatar" type="file"></input>
+                    </label>
+                </Avatar>
                 <Input
                     placeholder="Nome"
                     type="text"
@@ -27,13 +36,13 @@ export function Profile(){
 
                 <Input
                     placeholder="Senha Atual"
-                    type="text"
+                    type="password"
                     icon={FiLock}
                 />
 
                 <Input
                     placeholder="Nova senha "
-                    type="text"
+                    type="password"
                     icon={FiLock}
                 />
 
