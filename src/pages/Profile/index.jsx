@@ -14,7 +14,7 @@ export function Profile(){
 
             <Form>
                 <Avatar>
-                    <img src="https://github.com/iuryescano.png" alt="Foto do usuario"></img>
+                    <img src="https://github.com/iuryescano.png" alt="Foto do usuário"></img>
                     
                     <label htmlFor="avatar">
                         <FiCamera/>
