@@ -13,7 +13,7 @@ export function Home(){
     return(
         <Container>
             <Brand>
-                <h1>MyNotes</h1>
+                <h1>MyNotess</h1>
             </Brand>
 
         <Header/>
