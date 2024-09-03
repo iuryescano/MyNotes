@@ -4,7 +4,7 @@ import { api } from "../services/";
 
 export const AuthContext = createContext({});
 
-function AuthProvider({ children }) {
+function AuthProvider({ children }) { 
     const [data, setData] = useState({});
 
     async function signIn({ email, password }) {
