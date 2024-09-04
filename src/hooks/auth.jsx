@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 import { api } from "../services/";
 
@@ -12,6 +12,9 @@ function AuthProvider({ children }) {
         try {
             const response = await api.post("/sessions", { email, password });
             const { user, token } = response.data;
+
+            localStorage.setItem("@mynotes:user", JSON.stringify(user));
+            localStorage.setItem("@mynotes:token", token);
             
             console.log(user, token);
             api.defaults.headers.authorization = `Bearer ${token}`;
@@ -26,10 +29,36 @@ function AuthProvider({ children }) {
         }
     }
 
+    function signOut() {
+        localStorage.removeItem("@mynotes:user");
+        localStorage.removeItem("@mynotes:token");
+
+        setData({});
+    }
+
+    useEffect(() => {
+        const token = localStorage.getItem("@mynotes:token");
+        const user = localStorage.getItem("@mynotes:user");
+
+        if(token && user) {
+            api.defaults.headers.authorization = `Bearer ${token}`;
+
+            setData({
+                token,
+                user: JSON.parse(user)
+            });
+        }
+    }, []);
+
 
     return (
-        <AuthContext.Provider value={{ signIn, user: data.user }}>
-            {children}
+        <AuthContext.Provider value={{ 
+            signIn, 
+            signOut,
+            user: data.user 
+            }}
+            >
+                {children}
         </AuthContext.Provider>
     )
 }
