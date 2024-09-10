@@ -8,12 +8,23 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/auth';
 
 export function Profile(){
-    const { user } = useAuth();
+    const { user, updateProfile } = useAuth();
 
     const [ name, setName ] = useState(user.name);
     const [ email, setEmail ] = useState(user.email);
     const [ passwordOld, setPasswordOld ] = useState();
     const [ passwordNew, setPasswordNew ] = useState();
+
+    async function handleUpdate() {
+        const user = {
+            name,
+            email,
+            password: passwordNew,
+            old_password: passwordOld,
+        }
+
+        await updateProfile({ user })
+    }
 
     return (
         <Container>
@@ -38,7 +49,7 @@ export function Profile(){
                     type="text"
                     icon={FiUser}
                     value={name}
-                    onchange={e => setName(e.target.value)}
+                    onChange={e => setName(e.target.value)}
                 />
 
                 <Input
@@ -46,24 +57,24 @@ export function Profile(){
                     type="text"
                     icon={FiMail}
                     value={email}
-                    onchange={e => setEmail(e.target.value)}
+                    onChange={e => setEmail(e.target.value)}
                 />
 
                 <Input
                     placeholder="Senha Atual"
                     type="password"
                     icon={FiLock}
-                    onchange={e => setPasswordOld(e.target.value)}
+                    onChange={e => setPasswordOld(e.target.value)}
                 />
 
                 <Input
                     placeholder="Nova senha "
                     type="password"
                     icon={FiLock}
-                    onchange={e => setPasswordNew(e.target.value)}
+                    onChange={e => setPasswordNew(e.target.value)}
                 />
 
-                <Button title="Salvar"/>
+                <Button title="Salvar" onClick={handleUpdate}/>
 
 
             </Form>
