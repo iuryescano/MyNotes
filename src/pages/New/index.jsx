@@ -45,6 +45,18 @@ export function New(){
   }
 
   async function handleNewNote(){
+    if(!title) { //se tiver um título vazio faça...
+      return alert("Você não preencheu o título da nota. Por favor, preencha esse campo.")
+    }
+
+    if(newLink) { //se tiver uma novoLink no campo faça...
+      return alert("Voce deixou um link no campo para adicionar mas não confirmou. Clique para adicionar ou deixe o campo vazio")
+    }
+
+    if(newTag) { //se tiver uma novaTag no campo faça...
+      return alert("Voce deixou uma tag no campo para adicionar mas não confirmou. Clique para adicionar ou deixe o campo vazio")
+    }
+
     await api.post("/notes", {
       title,
       description,
