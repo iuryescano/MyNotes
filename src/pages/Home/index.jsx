@@ -1,4 +1,8 @@
+import { useState, useEffect } from 'react';
 import { FiPlus } from 'react-icons/fi';
+
+import { api } from '../../services/index';
+
 import { Container, Brand, Menu, Search, Content, NewNote } from './styles';
 
 import { Header } from '../../components/Header';
@@ -10,18 +14,51 @@ import { ButtonText } from '../../components/ButtonText';
 
 
 export function Home(){
+    const [tags, setTags] = useState([]); //para trazer nossas tags ao inicio
+    const [tagsSelected, setTagsSelected] = useState([]);
+
+    function handleTagSelected(tagName){
+        setTagsSelected(prevState => [...prevState, tagName]);
+    }
+
+    useEffect(()=>{ //useEffect nao aceita async ent vou criar uma funcao dentro dela 
+        async function fetchTags(){
+            const response = await api.get("/tags"); //endereco da api que vai retornar as tags
+            setTags(response.data);
+        }
+
+        fetchTags(); //chamando a funcao fetchTags que vai trazer as tags
+    },[]);
+
     return(
         <Container>
             <Brand>
-                <h1>MyNotess</h1>
+                <h1>MyNotes</h1>
             </Brand>
 
         <Header/>
 
         <Menu>
-            <li><ButtonText title="Todos" /></li>
-            <li><ButtonText title="React" /></li>
-            <li><ButtonText title="Nodejs" /></li>
+            <li>
+                <ButtonText 
+                    title="Todos" 
+                    onClick={() => handleTagSelected("all")} 
+                    $isactive={tagsSelected.length === 0}/>
+            </li>
+
+            {
+                tags && tags.map(tag => ( //primeiramente verifico se existe tags, se existir vou percorrer nelas...
+                    <li key={String(tag.id)}>
+                        <ButtonText 
+                            title={tag.name} 
+                            onClick={() => handleTagSelected(tag.name)} 
+                            $isactive={tagsSelected.includes(tag.name)}
+                        />
+                    </li>
+
+                )) 
+            }
+            
         </Menu>
             
         <Search>
