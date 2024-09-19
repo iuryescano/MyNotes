@@ -14,11 +14,21 @@ import { ButtonText } from '../../components/ButtonText';
 
 
 export function Home(){
+    const [search, setSearch] = useState("");
     const [tags, setTags] = useState([]); //para trazer nossas tags ao inicio
     const [tagsSelected, setTagsSelected] = useState([]);
+    const [notes, setNotes] = useState([]); //para trazer as notas ao inicio
 
     function handleTagSelected(tagName){
-        setTagsSelected(prevState => [...prevState, tagName]);
+        const alreadySelected = tagsSelected.includes(tagName);
+
+        if(alreadySelected){
+            const filteredTags = tagsSelected.filter(tag => tag !== tagName);
+            setTagsSelected(filteredTags);
+
+        } else {
+            setTagsSelected(prevState => [...prevState, tagName]); //para o todos voltar quando nenhum tiver selecionado
+        }
     }
 
     useEffect(()=>{ //useEffect nao aceita async ent vou criar uma funcao dentro dela 
@@ -29,6 +39,14 @@ export function Home(){
 
         fetchTags(); //chamando a funcao fetchTags que vai trazer as tags
     },[]);
+
+    useEffect(() => {
+        async function fetchNotes(){
+            const response = await api.get(`/notes?title=${search}&tags=${tagsSelected}`);
+            setNotes(response.data);
+        }
+        fetchNotes();
+    }, [tagsSelected, search]); //oq colocar ai dentro do vetor... quando mudar o conteudo do search ou do tagselected ele vai executar de novo o useEffect
 
     return(
         <Container>
@@ -62,18 +80,22 @@ export function Home(){
         </Menu>
             
         <Search>
-            <Input placeholder="Pesquisar pelo titulo"/>
+            <Input 
+                placeholder="Pesquisar pelo titulo"
+                onChange={() => setSearch(e.target.value)}
+            />
         </Search>
 
         <Content>
             <Section title="Minhas Notas">
-                <Note data={{
-                    title: 'React',
-                    tags: [
-                        {id: '1', name: 'React'},
-                        {id: '2', name: 'Rocketseat'}
-                    ]
-                    }}/>
+                {
+                    notes.map(note => (
+                    <Note 
+                        key={String(note.id)}
+                        data={note}
+                    />
+                    ))
+                }
             </Section>
         </Content>
 
