@@ -20,6 +20,11 @@ export function Home(){
     const [notes, setNotes] = useState([]); //para trazer as notas ao inicio
 
     function handleTagSelected(tagName){
+
+        if(tagName === "all"){
+            return setTagsSelected([]);
+        }
+
         const alreadySelected = tagsSelected.includes(tagName);
 
         if(alreadySelected){
@@ -82,7 +87,7 @@ export function Home(){
         <Search>
             <Input 
                 placeholder="Pesquisar pelo titulo"
-                onChange={() => setSearch(e.target.value)}
+                onChange={(event) => setSearch(event.target.value)}
             />
         </Search>
 
