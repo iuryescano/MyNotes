@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FiPlus } from 'react-icons/fi';
 
 import { api } from '../../services/index';
@@ -19,6 +20,8 @@ export function Home(){
     const [tagsSelected, setTagsSelected] = useState([]);
     const [notes, setNotes] = useState([]); //para trazer as notas ao inicio
 
+    const navigate = useNavigate();
+
     function handleTagSelected(tagName){
 
         if(tagName === "all"){
@@ -34,6 +37,10 @@ export function Home(){
         } else {
             setTagsSelected(prevState => [...prevState, tagName]); //para o todos voltar quando nenhum tiver selecionado
         }
+    }
+
+    function handleDetails(id){
+        navigate(`/details/${id}`);
     }
 
     useEffect(()=>{ //useEffect nao aceita async ent vou criar uma funcao dentro dela 
@@ -98,6 +105,7 @@ export function Home(){
                     <Note 
                         key={String(note.id)}
                         data={note}
+                        onClick={() => handleDetails(note.id)}
                     />
                     ))
                 }
