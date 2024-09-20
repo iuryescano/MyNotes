@@ -1,12 +1,13 @@
 import { RiShutDownLine } from 'react-icons/ri';
 import { useAuth } from '../../hooks/auth'
 import { Container, Profile, Logout } from './styles';
+import avatarPlaceholder from "../../assets/avatar_placeholder.svg"
 import { api } from '../../services/index';
 import { useNavigate } from 'react-router-dom';
 
 export function Header(){
     const { signOut, user } = useAuth();
-    const navigation = useNavigation();
+    const navigation = useNavigate();
     
 
     function handleSignOut(){

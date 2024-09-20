@@ -5,11 +5,9 @@ import { SignUp } from '../pages/SignUp';
 
 
 export function AuthRoutes(){
-    const user = localStorage.setItem("@mynotes:user");
+    const user = localStorage.getItem("@mynotes:user");
     
     
-
-
     return(
         <Routes>
             <Route path='/' element={<SignIn/>}/>
