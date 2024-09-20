@@ -18,7 +18,16 @@ export function Details() { //Se eu tivesse colocado default lá no main eu não
   const navigate = useNavigate(); //para navegar para outras rotas
 
   function handleBack(){
-    navigate("/");
+    navigate(-1); //volta para rota anterior
+  }
+
+  async function handleRemove(){
+    const confirm = window.confirm("Deseja realmente remover a nota ?");
+
+    if( confirm ) {
+      await api.delete(`/notes/${params.id}`);
+      handleBack(-1); //reaproveitando a função usada antes de navigate 
+    }
   }
 
   useEffect(() => {
@@ -38,7 +47,10 @@ export function Details() { //Se eu tivesse colocado default lá no main eu não
        data && //se tem conteudo... mostra o valor... se nao tiver...
         <main>
           <Content>
-            <ButtonText title="excluir nota"/>
+            <ButtonText 
+              title="excluir nota"
+              onClick={handleRemove}
+            />
             
             <h1>{data.title}</h1>
 

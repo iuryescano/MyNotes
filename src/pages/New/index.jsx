@@ -1,12 +1,12 @@
 import { useState } from 'react'; 
-import { Link } from 'react-router-dom';
 
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { Textarea } from '../../components/Textarea';
 import { NoteItem } from '../../components/NoteItem';
 import { Section } from '../../components/Section';
 import { Button } from '../../components/Button';
+import { ButtonText } from '../../components/ButtonText';
 import { Input } from '../../components/Input';
 import { Header } from '../../components/Header';
 
@@ -25,6 +25,10 @@ export function New(){
   const [ newTag, setNewTag ] = useState("");
 
   const navigate = useNavigate();
+
+  function handleBack(){
+    navigate(-1); //volta para rota anterior
+  }
 
   function handleAddLink(){
     setLinks(prevState => [...prevState, newLink])
@@ -65,7 +69,7 @@ export function New(){
     });
 
     alert("Nota cadastrada com sucesso!");
-    navigate("/");
+    navigate(-1);
   }
 
 
@@ -77,7 +81,10 @@ export function New(){
         <Form>
           <header>
             <h1>Criar Nota</h1>
-            <Link to="/">Voltar</Link>
+            <ButtonText 
+              title={"Voltar"} 
+              onClick={handleBack}
+            />
           </header>
 
           <Input 
