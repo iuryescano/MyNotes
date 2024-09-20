@@ -27,14 +27,17 @@ export function Profile(){
     
 
     async function handleUpdate() {
-        const user = {
+        const updated = {
             name,
             email,
             password: passwordNew,
             old_password: passwordOld,
         }
 
-        await updateProfile({ user, avatarFile })
+        const userUpdated = Object.assign(user, updated); //isso aqui é para manter o avatar mesmo alterando só o nome
+        //return console.log(userUpdated);
+
+        await updateProfile({ user: userUpdated, avatarFile })
     }
 
     const navigate = useNavigate();
