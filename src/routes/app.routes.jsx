@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 import { New } from '../pages/New';
 import { Home } from '../pages/Home';
@@ -13,6 +13,8 @@ export function AppRoutes(){
             <Route path='/new' element={<New/>}/>
             <Route path='/profile' element={<Profile/>}/>
             <Route path='/details/:id' element={<Details/>}/>
+
+            <Route path="*" element={ <Navigate to="/"/> } /> //se tentar acessar uma rota aleatoria ele volta pra rota raiz padrão.
         </Routes>
     )
 }
